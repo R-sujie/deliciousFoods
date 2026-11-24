@@ -1,0 +1,2 @@
+FROM mysql:8.0
+COPY database/deliciousfoods.sql /docker-entrypoint-initdb.d/01-deliciousfoods.sql
