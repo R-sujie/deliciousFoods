@@ -5,7 +5,7 @@
 - [在线演示](https://web-production-43b9969e.up.railway.app/)
 - [在线后台登录页](https://web-production-43b9969e.up.railway.app/end/page/login.html)
 
-线上演示数据库从 `schema.sql` 和 `demo.sql` 初始化，预置两道菜谱和两条食材记录。公开后台登录页需要有效账号，演示初始化脚本不会创建管理员。
+线上网站使用从 `database/deliciousfoods.sql` 导入的独立 MySQL 数据库。已验证前台接口可读取原始备份中的 13 条菜谱和 8 条食材。后台登录页使用备份中的测试账号数据。
 
 ## 使用 Docker Compose 本地启动
 
@@ -83,10 +83,10 @@ java -jar target/deliciousFoods-1.0-SNAPSHOT.jar
 | `src/main/resources/static/front` | 网站前台 |
 | `src/main/resources/static/end` | 后台页面 |
 | `database` | 数据库建表脚本、示例数据及原始备份 |
-| `Dockerfile` / `Dockerfile.mysql` | 应用镜像及 Railway MySQL 镜像 |
+| `Dockerfile` / `Dockerfile.mysql` / `Dockerfile.mysql.full` | 应用镜像、示例 MySQL 镜像及完整备份 MySQL 镜像 |
 | `compose.yaml` | 本地应用和 MySQL 编排 |
 
-部署到 Railway 时，网站服务使用根目录的 `Dockerfile`，MySQL 服务使用 `Dockerfile.mysql`。网站通过 `DB_URL`、`DB_USERNAME`、`DB_PASSWORD` 连接同一项目中的 MySQL。MySQL 数据和站点上传文件分别挂载持久卷，网站域名指向应用监听端口。
+部署到 Railway 时，网站服务使用根目录的 `Dockerfile`，线上 MySQL 服务使用 `Dockerfile.mysql.full`，首次启动时导入完整备份。`Dockerfile.mysql` 用于单独部署示例库。网站通过 `DB_URL`、`DB_USERNAME`、`DB_PASSWORD` 连接同一项目中的 MySQL。MySQL 数据和站点上传文件分别挂载持久卷，网站域名指向应用监听端口。
 
 ## 常见问题
 
